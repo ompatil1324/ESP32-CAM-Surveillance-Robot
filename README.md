@@ -4,22 +4,21 @@ A Wi-Fi controlled surveillance robot built using the AI-Thinker ESP32-CAM, OV26
 
 ## Overview
 
-This project is a compact robotic surveillance platform that combines wireless communication, live video streaming and motor control.
+This project is a compact robotic surveillance platform combining wireless communication, live video streaming and motor control.
 
-The ESP32-CAM provides the camera and Wi-Fi functionality. A web interface allows the user to view the live camera stream and remotely control the robot's movement.
+The ESP32-CAM provides the camera and Wi-Fi functionality. A web interface allows the user to view the live camera stream and remotely control the robot.
 
 ## Features
 
-- 📷 Live camera streaming
-- 📡 Wi-Fi communication
-- 🌐 Browser-based control interface
-- 🚗 Forward movement
-- 🚗 Backward movement
-- ↩️ Left turning
-- ↪️ Right turning
-- 🛑 Stop control
-- ⚙️ L298N motor driver
-- 📱 Control from a phone or computer
+- Live camera streaming
+- Wi-Fi communication
+- Browser-based control
+- Forward movement
+- Backward movement
+- Left and right turning
+- Stop control
+- L298N motor driver
+- Remote control from phone or computer
 
 ## Hardware Components
 
@@ -28,20 +27,17 @@ The ESP32-CAM provides the camera and Wi-Fi functionality. A web interface allow
 | AI-Thinker ESP32-CAM | Main controller and Wi-Fi |
 | OV2640 Camera | Live video capture |
 | L298N Motor Driver | Motor control |
-| DC Geared Motors ×2 | Robot movement |
+| DC Geared Motors | Robot movement |
 | Robot Chassis | Mechanical structure |
 | Wheels | Robot movement |
 | Caster Wheel | Mechanical support |
 | Battery Pack | Power supply |
-| 5V Regulated Supply | ESP32-CAM power |
 
-For the complete components, instruments and wiring information, see:
-
-`hardware/Components_and_Instruments.txt`
+See `hardware/Components_and_Instruments.txt` for the complete components and instruments list.
 
 ## Pin Configuration
 
-### L298N → ESP32-CAM
+### ESP32-CAM → L298N
 
 | ESP32-CAM | L298N | Function |
 |---|---|---|
@@ -50,77 +46,70 @@ For the complete components, instruments and wiring information, see:
 | GPIO 14 | IN3 | Right motor control |
 | GPIO 15 | IN4 | Right motor control |
 
-### Motors
-L298N OUT1 and OUT2 → Left Motors
-L298N OUT3 and OUT4 → Right Motors
+### Motor Connections
+L298N OUT1 and OUT2 → Left Motor
+L298N OUT3 and OUT4 → Right Motor
 
-
-
-
-##Power
+Power
 Motor Battery + → L298N Motor Supply
 Motor Battery - → L298N GND
 ESP32-CAM GND → L298N GND
 Regulated 5V → ESP32-CAM 5V
 
-##System Architecture
+All grounds must be connected together.
+
+System Architecture
              Wi-Fi
                │
-       ┌───────▼───────┐
-       │ Phone / Laptop│
-       │ Web Interface │
-       └───────┬───────┘
+       ┌───────▼────────┐
+       │ Phone / Laptop │
+       │  Web Interface │
+       └───────┬────────┘
                │
                │ Wi-Fi
                │
        ┌───────▼────────┐
        │   ESP32-CAM    │
-       │                │
        │ Camera + Wi-Fi │
-       │ Web Server     │
+       │   Web Server   │
        └───────┬────────┘
                │
         Motor Control
                │
        ┌───────▼───────┐
        │     L298N     │
-       │ Motor Driver  │
+       │  Motor Driver │
        └───────┬───────┘
               / \
              /   \
-   Left Motors   Right Motors
-
-
-
-##How It Works
-The ESP32-CAM starts and initializes the OV2640 camera.
-The ESP32-CAM connects to the configured Wi-Fi network.
-A web server is started on the ESP32-CAM.
-The ESP32-CAM displays its IP address through the Serial Monitor.
-The user opens the IP address in a web browser.
-The browser displays the live MJPEG camera stream.
-Movement buttons send commands to the ESP32-CAM.
-The ESP32-CAM controls the L298N motor driver.
-The L298N drives the two DC motors.
-
-##Software
+        Left Motor  Right Motor
+How It Works
+The ESP32-CAM initializes the OV2640 camera.
+It connects to the configured Wi-Fi network.
+A web server starts on the ESP32-CAM.
+The ESP32-CAM IP address is displayed through the Serial Monitor.
+The user opens the IP address in a browser.
+The browser displays the live camera stream.
+Movement commands are sent to the ESP32-CAM.
+The ESP32-CAM controls the L298N.
+The L298N drives the motors.
+Software
 Arduino IDE
 ESP32 Arduino Core
 C/C++
 HTML
 CSS
 JavaScript
-
-##Installation
+Installation
 1. Install Arduino IDE
 
 Install Arduino IDE on your computer.
 
 2. Install ESP32 Board Support
 
-Install the ESP32 board package in Arduino IDE.
+Install the ESP32 board package through the Arduino IDE Boards Manager.
 
-3. Select Board
+3. Select the Board
 
 Select:
 
@@ -131,16 +120,14 @@ Open:
 
 src/ESP32-CAM_Surveillance_Robot_Code.ino
 
-Change:
+Set your Wi-Fi credentials:
 
 const char* WIFI_SSID = "YOUR_WIFI_NAME";
 const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 
-to your own Wi-Fi credentials.
-
 Do not upload real Wi-Fi passwords to a public GitHub repository.
 
-5. Upload
+5. Upload the Code
 
 Use a USB-to-TTL/FTDI programmer.
 
@@ -155,48 +142,34 @@ After uploading:
 Disconnect GPIO0 from GND.
 Press RESET.
 Open Serial Monitor.
-Set baud rate to 115200.
+Set the baud rate to 115200.
 Find the ESP32-CAM IP address.
 6. Open the Control Interface
 
 Connect your phone or computer to the same Wi-Fi network.
 
-Open the IP address shown in the Serial Monitor.
+Open the IP address displayed in the Serial Monitor.
 
-The web interface will provide:
-
-Live camera stream
-Forward
-Backward
-Left
-Right
-Stop
-
-
-##Project Structure
+Project Structure
 ESP32-CAM-Surveillance-Robot/
 │
-├── README.md
+├── hardware/
+│   └── Components_and_Instruments.txt
 │
 ├── src/
 │   └── ESP32-CAM_Surveillance_Robot_Code.ino
 │
-└── hardware/
-    └── Components_and_Instruments.txt
-
-
-
-##Important Notes
-Use a suitable regulated supply for the ESP32-CAM.
-Do not connect an unsuitable motor battery directly to the ESP32-CAM.
-Connect ESP32-CAM and L298N grounds together.
-GPIO12 and GPIO15 are ESP32 boot-strapping pins and may cause boot/programming issues depending on the motor-driver wiring.
-Disconnect motor-driver inputs during programming if the ESP32-CAM does not enter flashing mode.
+├── .gitignore
+├── LICENSE
+└── README.md
+Important Notes
+Use a suitable regulated power supply for the ESP32-CAM.
+Do not connect the motor battery directly to the ESP32-CAM.
+Connect the ESP32-CAM and L298N grounds together.
+GPIO12 and GPIO15 are boot-strapping pins and may cause boot/programming issues depending on the motor-driver wiring.
+Disconnect motor-driver inputs during programming if necessary.
 This project does not use an SD card.
 Future Improvements
-
-##Possible future upgrades include:
-
 Pan-tilt camera
 Obstacle detection
 Ultrasonic sensor
@@ -213,10 +186,6 @@ Om Patil
 
 Electronics & Telecommunication Engineering
 
+License
 
-##License
-
-This project is intended for educational and development purposes.
-
-
-
+This project is licensed under the MIT License.
