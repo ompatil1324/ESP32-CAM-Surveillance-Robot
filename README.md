@@ -21,7 +21,7 @@ Wi-Fi controlled surveillance robot using an AI-Thinker ESP32-CAM, OV2640 camera
 - AI-Thinker ESP32-CAM
 - OV2640 camera
 - L298N motor driver
-- 2 × DC geared motors
+- 4 × DC geared motors
 - Robot chassis and wheels
 - Battery and regulated power supply
 - Jumper wires
