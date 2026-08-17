@@ -1,0 +1,194 @@
+ESP32-CAM SURVEILLANCE ROBOT
+COMPONENTS & INSTRUMENTS LIST
+================================
+
+PROJECT:
+Wi-Fi Controlled Surveillance Robot using AI-Thinker ESP32-CAM
+
+1. MAIN ELECTRONICS
+-------------------
+1. AI-Thinker ESP32-CAM
+   - Main controller
+   - Wi-Fi communication
+   - Camera interface
+   - Web server
+
+2. OV2640 Camera Module
+   - Live video capture
+   - Connected to the ESP32-CAM camera socket
+
+3. L298N Motor Driver Module
+   - Controls the two DC motors
+   - Provides motor direction control
+
+4. DC Geared Motors × 2
+   - Left and right drive motors
+
+5. Robot Wheels × 2
+   - Connected to the DC geared motors
+
+6. Caster Wheel × 1
+   - Front/rear support for a two-wheel-drive chassis
+
+7. Robot Chassis
+   - Mechanical frame for mounting electronics and motors
+
+2. POWER COMPONENTS
+-------------------
+1. Battery Pack
+   - Main power source for the robot motors
+   - Battery voltage must match the motor and L298N requirements
+
+2. 5 V Regulated Power Supply / Buck Converter
+   - Provides a suitable regulated supply for the ESP32-CAM
+
+3. Power Switch
+   - Main ON/OFF control
+
+4. Battery Connector / Terminal
+   - Battery connection to the robot power system
+
+5. Jumper Wires
+   - Male-to-male
+   - Male-to-female
+   - Female-to-female as required
+
+6. Common Ground Connection
+   - ESP32-CAM GND and L298N GND must be connected together
+
+3. PROGRAMMING / DEVELOPMENT INSTRUMENTS
+-----------------------------------------
+1. USB-to-TTL / FTDI Programmer
+   - Used to upload code to ESP32-CAM
+
+2. USB Cable
+   - Used with the FTDI/USB-to-TTL programmer
+
+3. Computer / Laptop
+   - Arduino IDE
+   - Serial Monitor
+   - Code development
+
+4. Wi-Fi Router / Mobile Hotspot
+   - Provides Wi-Fi network for the ESP32-CAM
+   - Phone/laptop should be connected to the same network for control
+
+4. MECHANICAL TOOLS
+-------------------
+1. Screwdriver set
+2. Small pliers
+3. Wire cutter
+4. Wire stripper
+5. Soldering iron
+6. Solder wire
+7. Heat-shrink tubing / electrical insulation
+8. Nuts, bolts and spacers
+9. Double-sided tape / cable ties for mounting
+
+5. TESTING INSTRUMENTS
+----------------------
+1. Digital Multimeter
+   - Check voltage
+   - Check continuity
+   - Check polarity
+
+2. USB power meter (optional)
+   - Monitor USB supply voltage/current
+
+3. Bench DC power supply (optional)
+   - Useful for controlled testing
+
+6. PIN CONFIGURATION
+--------------------
+
+AI-THINKER ESP32-CAM TO L298N
+
+ESP32-CAM GPIO12 -> L298N IN1
+ESP32-CAM GPIO13 -> L298N IN2
+ESP32-CAM GPIO14 -> L298N IN3
+ESP32-CAM GPIO15 -> L298N IN4
+
+L298N OUT1/OUT2 -> Left DC motor
+L298N OUT3/OUT4 -> Right DC motor
+
+L298N ENA -> Jumper installed for full-speed Motor A
+L298N ENB -> Jumper installed for full-speed Motor B
+
+POWER
+
+Motor battery + -> L298N motor supply (+12V/Vs, according to battery/motor voltage)
+Motor battery - -> L298N GND
+ESP32-CAM GND -> L298N GND
+
+ESP32-CAM 5V -> regulated 5 V supply
+
+IMPORTANT:
+- Do not connect the motor battery directly to the ESP32-CAM unless its voltage is properly regulated and suitable.
+- Keep all grounds common.
+- GPIO12 and GPIO15 are ESP32 boot-strapping pins. If boot/programming problems occur, temporarily disconnect the L298N input wires while starting/programming the board.
+- This project does not use the microSD interface.
+
+7. FTDI / USB-TTL PROGRAMMING CONNECTION
+----------------------------------------
+FTDI 5V -> ESP32-CAM 5V
+FTDI GND -> ESP32-CAM GND
+FTDI TX -> ESP32-CAM U0R / GPIO3
+FTDI RX -> ESP32-CAM U0T / GPIO1
+GPIO0 -> GND during programming
+
+After uploading:
+1. Disconnect GPIO0 from GND.
+2. Press RESET.
+3. ESP32-CAM boots normally.
+
+8. CAMERA
+---------
+OV2640 camera:
+- Inserted into the ESP32-CAM camera connector.
+- Do not manually wire the OV2640 GPIO pins.
+
+9. BASIC SYSTEM BLOCK DIAGRAM
+-----------------------------
+
+                Wi-Fi
+                  |
+        +---------v----------+
+        |    Phone / PC      |
+        |  Web Control UI    |
+        +---------+----------+
+                  |
+                  |
+        +---------v----------+
+        |     ESP32-CAM      |
+        |                    |
+        | Wi-Fi + Web Server |
+        | Camera Processing  |
+        +---------+----------+
+                  |
+             Motor Control
+                  |
+        +---------v----------+
+        |      L298N         |
+        |   Motor Driver     |
+        +----+----------+----+
+             |          |
+          Motor L     Motor R
+
+10. RECOMMENDED SPARES
+----------------------
+- Extra jumper wires
+- Extra DC motor
+- Spare wheels
+- Spare L298N module
+- Extra ESP32-CAM programmer connection wires
+- Heat-shrink tubing
+- Spare screws and nuts
+
+11. SAFETY / TESTING NOTES
+--------------------------
+- Check polarity before powering the circuit.
+- Test motor direction with the wheels lifted from the ground first.
+- Use a regulated supply for the ESP32-CAM.
+- Do not short the battery terminals.
+- Disconnect power before changing wiring.
+- Verify the L298N and motor voltage ratings before connecting the battery.
